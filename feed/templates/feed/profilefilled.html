@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+
+{%block content %}
+
+<h1> Username : @{{user.get_username}} </h1><h2> No. of posts -- {{num}}</h2>
+<h3>{{name}}</h3>
+<hr>
+{%for post in posts %}
+<h2> {{post.post}} </h2><h4>{{post}}</h4><h6>{{post.time}}</h6>
+<hr>
+{% endfor %}
+
+{%endblock%}

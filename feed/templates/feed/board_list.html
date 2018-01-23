@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    {% if board_list %}
+    <ul>
+
+      {% for board in board_list %}
+        <h4>@{{board.user}}</h2>
+        <h5>{{ board.post}}</h3>
+        <h6>{{board.time}}</h4>
+        <hr>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no board in the library.</p>
+    {% endif %}       
+{% endblock %}

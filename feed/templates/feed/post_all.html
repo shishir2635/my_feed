@@ -1,0 +1,14 @@
+{%extends 'base_generic.html' %}
+
+
+
+{% block content %}
+<hr>
+{% for p in post%}
+<h3>{{p.post}}</h3>
+<h4>{{p.hash_tags}}</h4>
+<h6>{{p.time}}</h6>
+<a href="#">Like</a><h6>{{like}}</h6>
+<hr>
+{% endfor%}
+{% endblock %}
