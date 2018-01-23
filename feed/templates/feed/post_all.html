@@ -5,11 +5,13 @@
 {% block content %}
 <hr>
 {% for p in post%}
-<h1>{{p.id}}</h1>
+<h1>@{{p.user}}</h1>
 <h3>{{p.post}}</h3>
 <h4>{{p.hash_tags}}</h4>
 <h6>{{p.time}}</h6>
-<a href="{{p.id}}/like">Like</a> 
+<a style="display: inline;" href="{{p.id}}/like">Like</a> 
+<h6 style="display: inline;">{{p.likes}}</h6> &nbsp  &nbsp
+<a style="display: inline;" href="{{p.id}}/">Comment</a>
 <hr>
 {% endfor%}
 {% endblock %}

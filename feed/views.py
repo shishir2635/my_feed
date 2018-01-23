@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse
 from django.http import HttpResponse
 from django.views import generic
-from .models import profile,board
-from .forms import boardform,profileform
+from .models import profile,board,comment
+from .forms import boardform,profileform,commentform
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -78,11 +79,32 @@ def profile(request):
 		number = posty.count()
 		return render(request,'feed/profilefilled.html',{'posts':posty, 'num':number ,})
 
-class post_detail(generic.DetailView):
-	model=board
+@login_required(login_url='/login')
+def post_detail(request,pk):
+	if request.method == "POST":
+		form = commentform(request.POST)
+		if form.is_valid():
+			com = form.save(commit=False)
+			com.comment = form.cleaned_data.get('comment')
+			com.user = request.user
+			com.post = board(pk=pk)
+			com.save()
 
+			return redirect('/feed/post/{}'.format(pk))
+	else:
+		form = commentform()
+		post_ob = board.objects.filter(pk=pk)
+		comme = comment.objects.all()
+		return render(request,'feed/board_detail.html',{'post':post_ob,'comment':comme,'form':form,})
+
+
+@login_required(login_url='/login')
 def like_command(request,pk):
-	nol = board.like_set.filter(pk=pk).count()
-	return HttpResponse('<h1>nol</h1>')
+	post = board.objects.get(pk=pk)
+	post.likes += 1
+	post.save()
+	return redirect('posts_all')
 
+def post_comment(request,pk):
+	pass
 

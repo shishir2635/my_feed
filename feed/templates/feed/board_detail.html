@@ -1,9 +1,33 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h4>@{{board.user}}</h4>
+{% for post in post %}
+<b><h4>@{{post.user}}</h4></b>
 <hr>
-<h3>{{board.post}}</h3>
+<h3>{{post.post}}</h3>
 <br>
-<h5>{{board.time}}</h5>
+<h5>{{post.time}}</h5>
+<hr>
+
+
+
+<form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+
+
+<hr>
+<h4> All comments</h4>
+<hr>
+{%for comm in comment%}
+{% if comm.post.id == post.id  %}
+<h4 style="display: inline; color: red;">@{{comm.user}}   <h5 style="display: inline;">{{comm.comment}}</h5></h4>
+<h6>{{comm.time}}</h6>
+<br>
+{% endif %}
+{% endfor %}
+
+{% endfor %}
 {% endblock %}
