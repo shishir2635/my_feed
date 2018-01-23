@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views import generic
-from .models import profile,board,like
+from .models import profile,board
 from .forms import boardform,profileform
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -19,7 +19,7 @@ def Index(request):
 
 def posts_all(request):
 	post = board.objects.all().order_by('-time') 
-	return render(request,'feed/post_all.html',{'post':post,'numlike':likes,})
+	return render(request,'feed/post_all.html',{'post':post,})
 
 @login_required(login_url='/login')
 def post_new(request):
@@ -77,5 +77,12 @@ def profile(request):
 		posty = board.objects.filter(user=user)
 		number = posty.count()
 		return render(request,'feed/profilefilled.html',{'posts':posty, 'num':number ,})
+
+class post_detail(generic.DetailView):
+	model=board
+
+def like_command(request,pk):
+	nol = board.like_set.filter(pk=pk).count()
+	return HttpResponse('<h1>nol</h1>')
 
 
