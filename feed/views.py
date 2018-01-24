@@ -53,7 +53,7 @@ def signup(request):
 	return render(request,'feed/signup.html', {'form':form})
 
 @login_required(login_url='/login')
-def profile(request):
+def profilef(request):
 	try:
 		shishir = request.user.profile
 
@@ -75,9 +75,10 @@ def profile(request):
 	else:
 		user = request.user
 		#name = profile.objects.filter(username=user.get_username)
+		profile = request.user.profile
 		posty = board.objects.filter(user=user)
 		number = posty.count()
-		return render(request,'feed/profilefilled.html',{'posts':posty, 'num':number ,})
+		return render(request,'feed/profilefilled.html',{'posts':posty, 'num':number , 'profile':profile,})
 
 @login_required(login_url='/login')
 def post_detail(request,pk):
@@ -105,6 +106,8 @@ def like_command(request,pk):
 	post.save()
 	return redirect('posts_all')
 
-def post_comment(request,pk):
-	pass
+@login_required(login_url='/login')
+def profile_edit(request):
+	return HttpResponse('Work in Progress !')
+
 

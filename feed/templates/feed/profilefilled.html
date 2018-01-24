@@ -3,8 +3,13 @@
 
 {%block content %}
 
-<h1> Username : @{{user.get_username}} </h1><h2> No. of posts -- {{num}}</h2>
-<h3>{{name}}</h3>
+<h2 style="display: inline;"> {{profile.name}}   </h2><h4 style="display: inline; color: red;">@{{user.get_username}}</h4>
+&nbsp &nbsp<a href="edit">Edit Profile</a>
+<br>
+&nbsp<h4 style="display: inline;">{{profile.branch}}</h4>
+&nbsp<h4 style="display: inline;">{{profile.year}}</h4>
+<hr>
+<h4> No. of posts -- {{num}}</h4>
 <hr>
 {%for post in posts %}
 <h2> {{post.post}} </h2><h4>{{post}}</h4><h6>{{post.time}}</h6>

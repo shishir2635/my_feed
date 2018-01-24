@@ -1,6 +1,7 @@
 from .models import board,profile,comment
 from django.forms import ModelForm
 
+
 class boardform(ModelForm):
 	class Meta:
 		model = board

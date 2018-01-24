@@ -8,6 +8,6 @@ urlpatterns = [
 	path('post/add/',views.post_new, name='newpost'),
 	path('post/<pk>/',views.post_detail,name='post_detail'),
 	path('post/<pk>/like',views.like_command,name='like_command'),
-	path('post/<pk>/comment',views.post_comment,name='post_comment'),
+	#path('post/<pk>/comment',views.post_comment,name='post_comment'),
 	#path('trending/',views.trending,name='trending')
 ]

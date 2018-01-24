@@ -24,5 +24,6 @@ urlpatterns = [
     path('login/',auth_views.login,name='login'),
     path('logout/',auth_views.logout,{'next_page':'/feed/'},name='logout'),
     path('signup/',view.signup,name='signup'),
-    path('profile/', view.profile,name='profile'),	
+    path('profile/', view.profilef,name='profile'),
+    path('profile/edit',view.profile_edit,name='profile_edit'),	
 ]
