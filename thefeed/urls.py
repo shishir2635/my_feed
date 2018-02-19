@@ -27,3 +27,4 @@ urlpatterns = [
     path('profile/', view.profilef,name='profile'),
     path('profile/edit',view.profile_edit,name='profile_edit'),	
 ]
+#kds    

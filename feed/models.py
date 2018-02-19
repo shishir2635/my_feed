@@ -46,15 +46,6 @@ class board(models.Model):
 	def __str__(self):
 		return self.post
 
-# class like(models.Model):
-
-# 	user = models.ForeignKey(User,on_delete=models.CASCADE)
-# 	post = models.ForeignKey(board,on_delete=models.CASCADE)
-
-# 	def __str__(self):
-
-# 		return str(self.id)
-
 class comment(models.Model):
 	
 	comment = models.CharField(max_length=200)
@@ -64,3 +55,11 @@ class comment(models.Model):
 
 	def __str__(self):
 		return self.comment
+
+
+# class like(models.Model):
+# 	by = models.ForeignKey(User,on_delete=models.CASCADE)
+# 	post = models.ForeignKey(board,on_delete=models.CASCADE)
+
+# 	def __str__(self):
+# 		return str(self.id)

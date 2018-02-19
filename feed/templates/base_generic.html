@@ -1,70 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  
-  {% block title %}<title>The Feed</title>{% endblock %}
+  {% block title%}<title> Thefeed </title>{% endblock %}
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
-  <!-- Add additional CSS in static file -->
-  {% load static %}
-  <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <style type="text/css">
+      @media only screen and (min-width: 500px){
+        .navbar-nav{
+          float: right;
+        }
+      }
+    </style>
 </head>
-
 <body>
 
+{% block navbar %}
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
-
-    <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-      <ul class="sidebar-nav">
-          <li><a href="{% url 'posts_all' %}">All Post</a></li>
-          <hr>
-          {% if user.is_authenticated %}
-            <li><a href="{%url 'newpost'%}">Add Post</a></li>
-            <hr>
-            <li>Welcome {{ user.get_username }}</li>
-            <li><a href="{%url 'profile' %}">My Profile</a>
-            <hr>
-            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li> 
-          {% else %}
-            <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>  
-            <hr>
-            <li><a href="{%url 'signup'%}">Register</a> 
-          {% endif %} 
-
-      </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-      {% block content %}{% endblock %}
-      {% block pagination %}
-      {% if is_paginated %}
-      <div class="pagination">
-          <span class="page-links">
-              {% if page_obj.has_previous %}
-                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-              {% endif %}
-              <span class="page-current">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-              </span>
-              {% if page_obj.has_next %}
-                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-              {% endif %}
-          </span>
-      </div>
-  {% endif %}
-{% endblock %}
-      </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="{% url 'posts_all' %}">TheFeed</a>
     </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    {% if user.is_authenticated %}
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'posts_all' %}"><span class="glyphicon glyphicon-align-left" aria-hidden="true"> All Posts</span></a></li>
+      <li><a href="{% url 'newpost' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Add Post</span></a></li>
+      <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Profile</span></a></li>
+      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off" aria-hidden="true"> Logout</a></span></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+    {% else %}
+    <ul class="nav navbar-nav" style="float: right;">
+      <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"> Login</a></span></li>
+      <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Register</span></a></li>
+    </ul>
+  </div>
+  </div>
+</nav>
+    {% endif %}
+{% endblock %}
 
+<!-- This will include the main block -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      
+    </div>
+    <div class="col-sm-4">
+      {% block content%} {% endblock %}
+    </div>
+    
   </div>
 
+</div>
+{% block pagination %}
+        {% if post.has_other_pages %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+  {% endblock %}
+</div>
 
 
 </body>
 </html>
+

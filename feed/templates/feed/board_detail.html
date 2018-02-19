@@ -2,11 +2,11 @@
 
 {% block content %}
 {% for post in post %}
-<b><h4>@{{post.user}}</h4></b>
+<b><h2 style="display: inline;">{{post.user.profile.name}} &nbsp &nbsp</h2><h4 style="display: inline;">@{{post.user}}</h4></b>
 <hr>
 <h3>{{post.post}}</h3>
 <br>
-<h5>{{post.time}}</h5>
+<h5 style="display: inline;">{{post.time}}</h5>
 <hr>
 
 

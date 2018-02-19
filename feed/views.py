@@ -8,18 +8,19 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator
 
 def Index(request):
-	post = board.objects.all().count()
-	return HttpResponse("No. of post in the system : {} posts".format(post))
+	return render(request,'feed/home_page.html')
 
-# @method_decorator(login_required, name='dispatch')
-# class PostListView(generic.ListView):
+# # @method_decorator(login_required, name='dispatch')
+# class PostAll(generic.ListView):
 # 	model = board
 # 	paginate_by = 10
 
+@login_required(login_url='/login')
 def posts_all(request):
-	post = board.objects.all().order_by('-time') 
+	post = board.objects.all().order_by('-time')
 	return render(request,'feed/post_all.html',{'post':post,})
 
 @login_required(login_url='/login')
@@ -98,6 +99,9 @@ def post_detail(request,pk):
 		comme = comment.objects.all()
 		return render(request,'feed/board_detail.html',{'post':post_ob,'comment':comme,'form':form,})
 
+@login_required(login_url='/login')
+def profile_edit(request):
+	return HttpResponse('Work in Progress !')
 
 @login_required(login_url='/login')
 def like_command(request,pk):
@@ -106,8 +110,11 @@ def like_command(request,pk):
 	post.save()
 	return redirect('posts_all')
 
-@login_required(login_url='/login')
-def profile_edit(request):
-	return HttpResponse('Work in Progress !')
+@login_required(login_url='/login')  #not in work still
+def unlike_command(request,pk):
+	post = board.objects.get(pk=pk)
+	post.likes -= 1
+	post.save()
 
+	return redirect('posts_all')
 

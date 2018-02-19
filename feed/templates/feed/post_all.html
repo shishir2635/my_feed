@@ -3,15 +3,15 @@
 
 
 {% block content %}
-<hr>
 {% for p in post%}
-<h1>@{{p.user}}</h1>
-<h3>{{p.post}}</h3>
-<h4>{{p.hash_tags}}</h4>
-<h6>{{p.time}}</h6>
-<a style="display: inline;" href="{{p.id}}/like">Like</a> 
+<strong><p style="display: inline;">{{p.user.profile.name}}  &nbsp &nbsp</p></strong><p style="display: inline;">@{{p.user}} &nbsp &nbsp</p>
+<h6 style=" display: inline;">{{p.time}}</h6>
+<p style="font-size:30px; margin-bottom: 25px;">{{p.post}}</p>
+
+<a style="display: inline;" href="{{p.id}}/like"><span class="glyphicon glyphicon-heart" aria-hidden="true"> </span></a>
+
 <h6 style="display: inline;">{{p.likes}}</h6> &nbsp  &nbsp
-<a style="display: inline;" href="{{p.id}}/">Comment</a>
+<a style="display: inline;" href="{{p.id}}/"><span class="glyphicon glyphicon-comment" aria-hidden="true"> Comment</span> </a>
 <hr>
 {% endfor%}
 {% endblock %}
